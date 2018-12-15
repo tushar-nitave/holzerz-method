@@ -10,7 +10,7 @@ Date:
 
 # get number of positions from user
 print("Enter number of positions: ")
-positions = input()
+positions = int(input())
 
 # array to store mass at each position
 mass = [int(positions)]
@@ -24,7 +24,7 @@ for i in range(int(positions)):
 
 # get assumed frequency from user
 print("Enter assumed frequency: ")
-assumed_frequency = input()
+assumed_frequency = float(input())
 
 ###########################################################################
 #----------------------GETTING INPUT END----------------------------------#
@@ -33,9 +33,35 @@ assumed_frequency = input()
 ###########################################################################
 #----------------------ALGORITHM IMPLEMENTATION START---------------------#
 ###########################################################################
+defelction = float(1)
+columnThird = []
+deflection_cal = []
+summation = float(0)
+stiffness = float(1000)
+residual = float(0)
 
+deflection_cal.append(1)
 
+for i in range(1, positions+1):
+
+    val = float(mass[i])*assumed_frequency*assumed_frequency
+    val = val * defelction
+    columnThird.append(float(val))
+
+    for j in range(i):
+        summation = summation + columnThird[j]
+    summation = summation/stiffness
+
+    if i == positions:
+        residual = summation
+    defelction = deflection_cal[i-1] - summation
+    deflection_cal.append(defelction)
+    summation = 0
 
 ###########################################################################
-#----------------------ALGORITHM IMPLEMENTATION START---------------------#
+#----------------------ALGORITHM IMPLEMENTATION END---------------------#
 ###########################################################################
+
+
+# final output
+print(residual)
